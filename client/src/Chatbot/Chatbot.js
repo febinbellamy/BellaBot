@@ -1,7 +1,11 @@
 import Axios from "axios";
 import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { saveMessage } from "../_actions/message_actions";
 
 function Chatbot() {
+  const dispatch = useDispatch();
+
   useEffect(() => {
     eventQuery("welcomeToMyWebsite");
   }, []);
@@ -15,6 +19,9 @@ function Chatbot() {
         },
       },
     };
+
+    dispatch(saveMessage(conversation));
+    console.log("text I sent the chatbot", conversation);
 
     const textQueryVariables = {
       text,
@@ -32,6 +39,8 @@ function Chatbot() {
         who: "chatbot",
         content: content,
       };
+
+      dispatch(saveMessage(conversation));
 
       console.log(conversation);
     } catch (error) {
@@ -63,7 +72,7 @@ function Chatbot() {
         content: content,
       };
 
-      console.log(conversation);
+      dispatch(saveMessage(conversation));
     } catch (error) {
       let conversation = {
         who: "chatbot",
@@ -73,6 +82,7 @@ function Chatbot() {
           },
         },
       };
+      dispatch(saveMessage(conversation));
     }
   };
 
@@ -81,7 +91,6 @@ function Chatbot() {
       if (!e.target.value) {
         return alert("You need to type something first!");
       }
-
       textQuery(e.target.value);
       e.target.value = "";
     }
@@ -100,8 +109,8 @@ function Chatbot() {
       <input
         style={{
           margin: 0,
-          width: "98%",
-          height: 43,
+          width: "100%",
+          height: 50,
           borderRadius: "4px",
           padding: "5px",
           fontSize: "1rem",
