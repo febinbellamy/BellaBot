@@ -1,5 +1,5 @@
 import Axios from "axios";
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { saveMessage } from "../_actions/message_actions";
 import Message from "./Sections/Message";
@@ -8,6 +8,18 @@ import Card from "./Sections/Card";
 
 function Chatbot() {
   const dispatch = useDispatch();
+
+  const messageEl = useRef(null);
+
+  useEffect(() => {
+    if (messageEl) {
+      messageEl.current.addEventListener('DOMNodeInserted', event => {
+        const { currentTarget: target } = event;
+        target.scroll({ top: target.scrollHeight, behavior: 'smooth' });
+      });
+    }
+  }, [])
+
   const messagesFromRedux = useSelector((state) => state.message.messages);
 
   useEffect(() => {
@@ -106,18 +118,14 @@ function Chatbot() {
 
   const renderOneMessage = (message, i) => {
     console.log(message, "message");
-
+    
     if (message.content && message.content.text && message.content.text.text) {
       return (
-        <Message key={i} who={message.who} text={message.content.text.text} />
-      );
+        // <div ref={messageEl}>
+        <Message key={i} who={message.who} text={message.content.text.text}/>)
+        // </div>;
     } else if (message.content && message.content.payload.fields.card) {
-      const AvatarSrc =
-        message.who === "chatbot" ? (
-          <Icon type="robot" />
-        ) : (
-          <Icon type="smile" />
-        );
+      const AvatarSrc = message.who === "chatbot" ? (<Icon type="robot" />) : (<Icon type="smile" />);
       return (
         <div>
           <List.Item style={{ padding: "1rem" }}>
@@ -153,7 +161,7 @@ function Chatbot() {
         borderRadius: "7px",
       }}
     >
-      <div style={{ height: 644, width: "100%", overflow: "auto" }}>
+      <div ref={messageEl} style={{ height: 644, width: "100%", overflow: "auto" }}>
         {renderMessage(messagesFromRedux)}
       </div>
       <input
