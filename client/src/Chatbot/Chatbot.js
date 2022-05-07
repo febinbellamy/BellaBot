@@ -2,23 +2,21 @@ import Axios from "axios";
 import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { saveMessage } from "../_actions/message_actions";
-import Message from "./Sections/Message";
-import { List, Icon, Avatar } from "antd";
+import Messages from "./Sections/Message/Messages";
 import Card from "./Sections/Card";
 
 function Chatbot() {
   const dispatch = useDispatch();
 
   const messageEl = useRef(null);
-
   useEffect(() => {
     if (messageEl) {
-      messageEl.current.addEventListener('DOMNodeInserted', event => {
+      messageEl.current.addEventListener("DOMNodeInserted", (event) => {
         const { currentTarget: target } = event;
-        target.scroll({ top: target.scrollHeight, behavior: 'smooth' });
+        target.scroll({ top: target.scrollHeight, behavior: "smooth" });
       });
     }
-  }, [])
+  }, []);
 
   const messagesFromRedux = useSelector((state) => state.message.messages);
 
@@ -118,25 +116,36 @@ function Chatbot() {
 
   const renderOneMessage = (message, i) => {
     console.log(message, "message");
-    
+
     if (message.content && message.content.text && message.content.text.text) {
       return (
-        // <div ref={messageEl}>
-        <Message key={i} who={message.who} text={message.content.text.text}/>)
-        // </div>;
+        <Messages key={i} who={message.who} text={message.content.text.text} />
+      );
     } else if (message.content && message.content.payload.fields.card) {
-      const AvatarSrc = message.who === "chatbot" ? (<Icon type="robot" />) : (<Icon type="smile" />);
       return (
-        <div>
-          <List.Item style={{ padding: "1rem" }}>
-            <List.Item.Meta
-              avatar={<Avatar icon={AvatarSrc} />}
-              title={message.who}
-              description={renderCards(
+        <div
+          className={message.who === "chatbot" ? "message chatbot" : "message"}
+        >
+          <div className="messageTop">
+            <img
+              className="messageImg"
+              src={
+                message.who === "chatbot"
+                  ? "https://images.unsplash.com/photo-1531747118685-ca8fa6e08806?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1645&q=80"
+                  : "https://images.unsplash.com/photo-1568880893176-fb2bdab44e41?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1774&q=80"
+              }
+              alt={
+                message.who === "chatbot"
+                  ? "an image of a robot"
+                  : "an image of a student"
+              }
+            />
+            <p className="messageText">
+              {renderCards(
                 message.content.payload.fields.card.listValue.values
               )}
-            />
-          </List.Item>
+            </p>
+          </div>
         </div>
       );
     }
@@ -155,19 +164,24 @@ function Chatbot() {
   return (
     <div
       style={{
-        height: 700,
-        width: 700,
+        height: 950,
+        width: 1800,
         border: "3px solid black",
         borderRadius: "7px",
+        scrollBehavior: "smooth",
       }}
     >
-      <div ref={messageEl} style={{ height: 644, width: "100%", overflow: "auto" }}>
+      <div
+        ref={messageEl}
+        style={{ height: 644, width: "100%", overflow: "auto" }}
+      >
         {renderMessage(messagesFromRedux)}
       </div>
       <input
         style={{
           margin: 0,
           width: "100%",
+          marginTop: "200px",
           height: 50,
           borderRadius: "4px",
           padding: "5px",

@@ -1,0 +1,36 @@
+.message {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+}
+
+.messageTop {
+  display: flex;
+}
+
+.messageImg {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+.messageText {
+  padding: 10px;
+  border-radius: 20px;
+  background-color: #007AFF;
+  color: white;
+  max-width: 470px;
+  margin-right: 10px;
+}
+
+.message.chatbot {
+  align-items: flex-end;
+}
+
+.message.chatbot .messageText {
+  background-color: #E9E9EB;
+  color: black;
+}
