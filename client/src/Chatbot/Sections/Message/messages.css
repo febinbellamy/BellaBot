@@ -8,19 +8,25 @@
   display: flex;
 }
 
+.messageBottom {
+  font-style: 12px;
+  margin: 15px;
+  margin-top: 1px;
+}
+
 .messageImg {
   width: 45px;
   height: 45px;
   border-radius: 50%;
   object-fit: cover;
   margin-right: 10px;
-  margin-left: 10px;
+  margin-left: 15px;
 }
 
 .messageText {
   padding: 10px;
   border-radius: 20px;
-  background-color: #007AFF;
+  background-color: #5749e2;
   color: white;
   max-width: 470px;
   margin-right: 10px;
@@ -31,6 +37,6 @@
 }
 
 .message.chatbot .messageText {
-  background-color: #E9E9EB;
+  background-color: #e9e9eb;
   color: black;
 }

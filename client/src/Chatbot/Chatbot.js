@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { saveMessage } from "../_actions/message_actions";
 import Messages from "./Sections/Message/Messages";
 import Card from "./Sections/Card";
+import { Helmet } from "react-helmet";
+import moment from "moment";
 
 function Chatbot() {
   const dispatch = useDispatch();
@@ -27,6 +29,7 @@ function Chatbot() {
   const textQuery = async (text) => {
     let conversation = {
       who: "user",
+      timestamp: moment().calendar(),
       content: {
         text: {
           text: text,
@@ -36,29 +39,29 @@ function Chatbot() {
 
     dispatch(saveMessage(conversation));
 
+
     const textQueryVariables = {
       text,
     };
 
     try {
-      const response = await Axios.post(
-        "/api/dialogflow/textQuery",
-        textQueryVariables
-      );
+      const response = await Axios.post("/api/dialogflow/textQuery", textQueryVariables);
 
       for (let content of response.data.fulfillmentMessages) {
         conversation = {
           who: "chatbot",
+          timestamp: moment().calendar(),
           content: content,
         };
 
-        dispatch(saveMessage(conversation));
+        dispatch(saveMessage(conversation))
       }
 
       console.log(conversation);
     } catch (error) {
       conversation = {
         who: "chatbot",
+        timestamp: moment().calendar(),
         content: {
           text: {
             text: "An error has occured!",
@@ -82,6 +85,7 @@ function Chatbot() {
       for (let content of response.data.fulfillmentMessages) {
         let conversation = {
           who: "chatbot",
+          timestamp: moment().calendar(),
           content: content,
         };
 
@@ -90,6 +94,7 @@ function Chatbot() {
     } catch (error) {
       let conversation = {
         who: "chatbot",
+        timestamp: moment().calendar(),
         content: {
           text: {
             text: "An error has occured!",
@@ -119,7 +124,7 @@ function Chatbot() {
 
     if (message.content && message.content.text && message.content.text.text) {
       return (
-        <Messages key={i} who={message.who} text={message.content.text.text} />
+        <Messages key={i} who={message.who} text={message.content.text.text} timestamp={message.timestamp}/>
       );
     } else if (message.content && message.content.payload.fields.card) {
       return (
@@ -132,7 +137,7 @@ function Chatbot() {
               src={
                 message.who === "chatbot"
                   ? "https://images.unsplash.com/photo-1531747118685-ca8fa6e08806?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1645&q=80"
-                  : "https://images.unsplash.com/photo-1568880893176-fb2bdab44e41?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1774&q=80"
+                  : "https://images.unsplash.com/photo-1623666996666-6a71ec53ff42?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=780&q=80"
               }
               alt={
                 message.who === "chatbot"
@@ -162,35 +167,43 @@ function Chatbot() {
   };
 
   return (
-    <div
-      style={{
-        height: 950,
-        width: 1800,
-        border: "3px solid black",
-        borderRadius: "7px",
-        scrollBehavior: "smooth",
-      }}
-    >
+    <div>
+      <Helmet>
+        <style>{"body { background: #d0cefc }"}</style>
+      </Helmet>
       <div
-        ref={messageEl}
-        style={{ height: 644, width: "100%", overflow: "auto" }}
-      >
-        {renderMessage(messagesFromRedux)}
-      </div>
-      <input
         style={{
-          margin: 0,
-          width: "100%",
-          marginTop: "200px",
-          height: 50,
-          borderRadius: "4px",
-          padding: "5px",
-          fontSize: "1rem",
+          height: 900,
+          width: 1500,
+          boxShadow: "1px 2px 9px #5749e2",
+          borderRadius: "7px",
+          scrollBehavior: "smooth",
+          backgroundColor: "white",
         }}
-        placeholder="Send a message..."
-        onKeyPress={keyPressHandler}
-        type="text"
-      />
+      >
+        <div
+          ref={messageEl}
+          style={{ height: 800, width: "100%", overflow: "auto" }}
+        >
+          {renderMessage(messagesFromRedux)}
+        </div>
+        <input
+          style={{
+            margin: 0,
+            width: "100%",
+            marginTop: "43px",
+            height: 60,
+            borderRadius: "4px",
+            padding: "5px",
+            fontSize: "1rem",
+            border: "none",
+            boxShadow: "1px 2px 9px #5749e2"
+          }}
+          placeholder="Send a message..."
+          onKeyPress={keyPressHandler}
+          type="text"
+        />
+      </div>
     </div>
   );
 }
