@@ -5,7 +5,9 @@
   "dependencies": {
     "antd": "^3.26.20",
     "axios": "^0.18.0",
+    "compass-mixins": "^0.12.11",
     "moment": "^2.29.3",
+    "node-sass": "^4.14.1",
     "prop-types": "^15.7.2",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
@@ -16,6 +18,7 @@
     "redux": "^4.0.5",
     "redux-promise": "^0.6.0",
     "redux-thunk": "^2.3.0",
+    "sass": "^1.51.0",
     "uuid": "^3.3.2"
   },
   "scripts": {

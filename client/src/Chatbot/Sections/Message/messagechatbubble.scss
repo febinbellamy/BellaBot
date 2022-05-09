@@ -1,0 +1,133 @@
+@import '~compass-mixins/lib/compass/css3';
+
+.chat-bubble{
+  height: 73px;
+  width: 46px;
+  background: #e5e5e5;
+  position: relative;
+  margin: 0 auto;
+  &:before{
+    content: '';
+    height: 72px;
+    width: 72px;
+    left: -36px;
+    position: absolute;
+    display: block;
+    background: #e5e5e5;
+    border-radius: 50%;
+    z-index: 1;
+  }
+  &:after{
+    content: '';
+    height: 72px;
+    width: 72px;
+    right: -36px;
+    position: absolute;
+    display: block;
+    background: #e5e5e5;
+    border-radius: 50%;
+    z-index: 1;
+  }
+  .tail{
+    height: 25px;
+    width: 25px;
+    background: #e5e5e5;
+    position: absolute;
+    left: -40px;
+    bottom: 2px;
+    border-radius: 50%;
+    &:before{
+      height: 12px;
+      width: 12px;
+      background: #e5e5e5;
+      content: '';
+      display: block;
+      border-radius: 50%;
+      position: absolute;
+      left: -10px;
+      bottom: -8px;
+    }
+  }
+  .loading{
+    position: absolute;
+    z-index: 10;
+    width: 67px;
+    left:-11px;
+    top: 27px;
+    .dot{
+      height: 17px;
+      width: 17px;
+      border-radius: 50%;
+      background: #c1c1c1;
+      display: block;
+      float: left;
+      margin: 0 0 0 8px;
+      &:first-child{
+        margin: 0;
+      }
+      &.one{
+        -webkit-animation: cycleOne 1s ease-in-out infinite;
+                animation: cycleOne 1s ease-in-out infinite;
+        -webkit-animation-direction: normal;
+                animation-direction: normal;  
+      }
+      &.two{
+        -webkit-animation: cycleTwo 1s ease-in-out infinite;
+                animation: cycleTwo 1s ease-in-out infinite;
+        -webkit-animation-direction: normal;
+                animation-direction: normal;
+      }
+      &.three{
+        -webkit-animation: cycleThree 1s ease-in-out infinite;
+                animation: cycleThree 1s ease-in-out infinite;
+        -webkit-animation-direction: normal;
+                animation-direction: normal;
+      }
+    }
+  }
+}
+
+@keyframes cycleOne{
+  0%{
+    background: rgba(150, 150, 150, 0.4);
+  }
+  33.333%{
+    background: rgba(150, 150, 150, 1);
+  }
+  66.6667%{
+    background: rgba(150, 150, 150, 0.4);
+  }
+  100%{
+    background: rgba(150, 150, 150, 0.4);
+  }
+}
+
+@keyframes cycleTwo{
+  0%{
+    background: rgba(150, 150, 150, 0.4);
+  }
+  33.333%{
+    background: rgba(150, 150, 150, 0.4);
+  }
+  66.6667%{
+    background: rgba(150, 150, 150, 1);
+  }
+  100%{
+    background: rgba(150, 150, 150, 0.4);
+  }
+}
+
+@keyframes cycleThree{
+  0%{
+    background: rgba(150, 150, 150, 0.4);
+  }
+  33.333%{
+    background: rgba(150, 150, 150, 0.4);
+  }
+  66.6667%{
+    background: rgba(150, 150, 150, 0.4);
+  }
+  100%{
+    background: rgba(150, 150, 150, 1);
+  }
+}

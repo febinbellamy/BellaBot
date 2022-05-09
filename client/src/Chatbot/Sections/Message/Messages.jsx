@@ -1,6 +1,6 @@
 import React from "react";
 import "./messages.css";
-import moment from "moment";
+import MessageChatBubble from "./MessageChatBubble";
 
 export default function Messages(props) {
   return (
@@ -20,10 +20,9 @@ export default function Messages(props) {
           }
         />
         <p className="messageText">{props.text}</p>
+        <MessageChatBubble/>
       </div>
-      <div className="messageBottom">
-          {props.timestamp}
-      </div>
+      <div className="messageBottom">{props.timestamp}</div>
     </div>
   );
 }

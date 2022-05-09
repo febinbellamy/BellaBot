@@ -28,7 +28,8 @@
     "twilio": "^3.76.1"
   },
   "devDependencies": {
+    "concurrently": "^4.1.0",
     "nodemon": "^1.18.10",
-    "concurrently": "^4.1.0"
+    "sass": "^1.51.0"
   }
 }
